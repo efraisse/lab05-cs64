@@ -55,7 +55,7 @@ int runTest(struct Test* test) {
   printf("expected rs: %u\n", exp->rt);
   printf("actual rs: %u\n", got.rs);
   printf("expected opcode: %u\n", exp->opcode);
-  printf("actual opcode: %u\n", got.opcode); 
+  printf("actual opcode: %u\n\n", got.opcode);
   return (exp->funct == got.funct &&
           exp->immediate == got.immediate &&
           exp->rd == got.rd &&
