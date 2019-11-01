@@ -1,17 +1,16 @@
 #include "DecodeCode.h"
 
-
 mipsinstruction decode(int value)
 {
 	mipsinstruction instr;
 
 	// TODO: fill in the fields
-	instr.funct = 15;
-	instr.immediate = -10;
-	instr.rd = 0;
-	instr.rt = 5;
-	instr.rs = 3;
-	instr.opcode = 25;
+	instr.funct = 0b00000000000000000000000000011111;
+	instr.immediate = 0b10000000000000001111111111111111;
+	instr.rd = 0b000000000000000001111100000000000;
+	instr.rt = 0b00000000000111110000000000000000;
+	instr.rs = 0b00000011111000000000000000000000;
+	instr.opcode = 0b11111100000000000000000000000000;
 
 	return instr;
 }

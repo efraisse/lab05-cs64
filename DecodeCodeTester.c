@@ -50,6 +50,18 @@ int runTest(struct Test* test) {
           exp->rt == got.rt &&
           exp->rs == got.rs &&
           exp->opcode == got.opcode);
+          std::cout << "expected funct: " << exp->funct << std::endl;
+          std::cout << "actual funct: " << got.funct << std::endl;
+          std::cout << "expected immediate: " << exp->immediate << std::endl;
+          std::cout << "actual immediate: " << got.immediate << std::endl;
+          std::cout << "expected rd: " << exp->rd << std::endl;
+          std::cout << "actual rd: " << got.rd << std::endl;
+          std::cout << "expected rt: " << exp->rt << std::endl;
+          std::cout << "actual rt: " << got.rt << std::endl;
+          std::cout << "expected rs: " << exp->rs << std::endl;
+          std::cout << "actual rs: " << got.rs << std::endl;
+          std::cout << "expected opcode: " << exp->opcode << std::endl;
+          std::cout << "actual opcode: " << got.opcode << std::endl;
 }
           
 int main(int argc, char** argv) {
