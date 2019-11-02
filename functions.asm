@@ -120,26 +120,29 @@ PrintReverse:
     add $t1, $t1, $a0 #get the address of the array since the value of a0 is the address of the array
 
     li $t7, 4
-    mult $a1, $t7
+    li $t6, 0 #don't need this, this is for better understanding
+    add $t6, $t6, $a1
+    mult $t6, $t7
     mflo $t6 # t6 now contains the length of the array multiplied by 4
-    sub $t6, $t6, 4 #subtract 4 to get an accurate address of the last element
+    sub $t6, $t6, $t7 #subtract 4 to get an accurate address of the last element
     sub $t1, $t1, $t6 #subtract t6 from the address of the array to start at the last element in the array
 
     j loopBack
 
 loopBack:
-    sll $t2, $t0, 2
-    add $t3, $t1, $t2
-    lw $t4, 0($t3)
+    sll $t2, $t0, 2 #shift t0 by 4 to get the next address in the array
+    add $t3, $t1, $t2 #add the address of the array to the shift to get the next element
+    lw $t4, 0($t3) #load load the element of the array from memory
 
-    li $v0, 1
+    li $v0, 1 #print out the element
     move $a2, $t4
     syscall
-    jal ConventionCheck
+    jal ConventionCheck #call convention check like requested from the lab instructions
 
-    add $t0, $t0, 1
+    add $t0, $t0, 1 #add 1 to the counter for my next shift in the array
 
-    beq, $a1, $t0, exitLoop
+    beq, $a1, $t0, exitLoop #if the counter is equal to the length of the array exit the program
+    j loopBack #if not, loop again
 
 exitLoop:
     jr $ra
