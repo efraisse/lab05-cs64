@@ -165,13 +165,13 @@ main:
 
 PrintReverse:
     #TODO: write your code here, $a0 stores the address of the array, $a1 stores the length of the array
-    li $t0, 0 #this will be my counter for the loop
-    add $t1, $t1, $a0 #get the address of the array by loading it into memory
+    li $t0, 0 #will be my counter for the loop
+    add $t1, $t1, $a0 #get the address of the array since the value of a0 is the address of the array
 
     li $t7, 4
     mult $a1, $t7
     mflo $t6 # t6 now contains the length of the array multiplied by 4
-    sub $t6, $t6, 4
+    sub $t6, $t6, 4 #subtract 4 to get an accurate address of the last element
     sub $t1, $t1, $t6 #subtract t6 from the address of the array to start at the last element in the array
 
     j loopBack
