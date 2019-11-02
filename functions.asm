@@ -117,21 +117,20 @@ Exit:
 PrintReverse:
     #TODO: write your code here, $a0 stores the address of the array, $a1 stores the length of the array
     li $t0, 0 #will be my counter for the loop
-    add $t1, $t1, $a0 #get the address of the array since the value of a0 is the address of the array
+    addu $t1, $t1, $a0 #get the address of the array since the value of a0 is the address of the array
 
     li $t7, 4
-    li $t6, 0 #don't need this, this is for better understanding
-    add $t6, $t6, $a1
+    addu $t6, $t6, $a1
     mult $t6, $t7
-    mflo $t6 # t6 now contains the length of the array multiplied by 4
-    sub $t6, $t6, $t7 #subtract 4 to get an accurate address of the last element
-    sub $t1, $t1, $t6 #subtract t6 from the address of the array to start at the last element in the array
+    mflo $t6 #t6 now contains the length of the array multiplied by 4
+    subu $t6, $t6, $t7 #subtract 4 to get an accurate address of the last element
+    subu $t1, $t1, $t6 #subtract t6 from the address of the array to start at the last element in the array
 
     j loopBack
 
 loopBack:
     sll $t2, $t0, 2 #shift t0 by 4 to get the next address in the array
-    add $t3, $t1, $t2 #add the address of the array to the shift to get the next element
+    addu $t3, $t1, $t2 #add the address of the array to the shift to get the next element
     lw $t4, 0($t3) #load load the element of the array from memory
 
     li $v0, 1 #print out the element
@@ -139,7 +138,7 @@ loopBack:
     syscall
     jal ConventionCheck #call convention check like requested from the lab instructions
 
-    add $t0, $t0, 1 #add 1 to the counter for my next shift in the array
+    addiu $t0, $t0, 1 #add 1 to the counter for my next shift in the array
 
     beq, $a1, $t0, exitLoop #if the counter is equal to the length of the array exit the program
     j loopBack #if not, loop again
