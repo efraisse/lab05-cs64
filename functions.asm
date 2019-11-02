@@ -116,6 +116,42 @@ Exit:
 
 PrintReverse:
     #TODO: write your code here, $a0 stores the address of the array, $a1 stores the length of the array
+    li $t0, 0 #this will be my counter for the loop
+    add $t1, $t1, $a0 #get the address of the array by loading it into memory
 
-    # Do not remove this line
-    jr      $ra
+    li $t7, 4
+    mult $a1, $t7
+    mflo $t6 # t6 now contains the length of the array multiplied by 4
+    sub $t6, $t6, 4
+    sub $t1, $t1, $t6 #subtract t6 from the address of the array to start at the last element in the array
+
+    j loopBack
+
+loopBack:
+    sll $t2, $t0, 2
+    add $t3, $t1, $t2
+    lw $t4, 0($t3)
+
+    li $v0, 1
+    move $a2, $t4
+    syscall
+    jal ConventionCheck
+
+    add $t0, $t0, 1
+
+    beq, $a1, $t0, exitLoop
+
+exitLoop:
+    jr $ra
+
+
+
+
+
+
+
+
+
+
+
+
