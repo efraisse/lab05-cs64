@@ -117,28 +117,27 @@ Exit:
 PrintReverse:
     #TODO: write your code here, $a0 stores the address of the array, $a1 stores the length of the array
     move $t7, $a0 #t0 contains the address of the array
-    move $s0, $a1 #t1 contains the lenth of the array
-    sub $s0, $s0, 1 #length of the array -1
+    subu $t4, $a1, 1 #length of the array - 1
 
 printLoop:
-    li $s2, 4
-    mult $s0, $s2
+    li $t3, 4
+    mult $t4, $t3
     mflo $t0
-    add $t0, $t0, $t7
-    lw $t1, 0($t0)
+    sub $t6, $t7, $t0
+    lw $t5, 0($t6)
 
     li $v0, 1
-    move $a0, $t1
+    move $a2, $t5
     syscall
 
-    li $v1, 4
-    la $a3, newline
+    li $v0, 4
+    la $a2, newline
     syscall
 
     jal ConventionCheck
 
-    sub $s0, $s0, 1
-    beq $s0, $zero, exitLoop
+    subu $t4, $t4, 1
+    beq $t4, $zero, exitLoop
     j printLoop
 
 exitLoop:
