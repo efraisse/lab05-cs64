@@ -116,15 +116,15 @@ Exit:
 
 PrintReverse:
     #TODO: write your code here, $a0 stores the address of the array, $a1 stores the length of the array
-    move $t7, $a0 #t0 contains the address of the array
-    subu $t4, $a1, 1 #length of the array - 1
+    move $t0, $a0 #t0 contains the address of the array
+    subu $t1, $a1, 1 #length of the array - 1
+    li $t2, 4 #contains 4, for 4 byte jumping addresses
 
 printLoop:
-    li $t3, 4
-    mult $t4, $t3
-    mflo $t0
-    sub $t6, $t7, $t0
-    lw $t5, 0($t6)
+    mult $t2, $t1
+    mflo $t3 #t3 contains the amount of elements to jump now
+    subu $t4, $t0, $t3 #stack memory: high address --> low address
+    lw $t5, 0($t0) #load last element from address
 
     li $v0, 1
     move $a2, $t5
@@ -135,9 +135,8 @@ printLoop:
     syscall
 
     jal ConventionCheck
-
-    subu $t4, $t4, 1
-    beq $t4, $zero, exitLoop
+    subu, $t1, $t1, 1
+    beq $t1, $zero, exitLoop
     j printLoop
 
 exitLoop:
