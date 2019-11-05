@@ -121,11 +121,9 @@ PrintReverse:
     sw $s1, 4($sp)
     sw $ra, 8($sp)
 
-    li $t0, 4
-    mult $t0, $a1
-    mflo $t1
+    sll $t0, $a1, 2
     move $s0, $a0
-    add $s1, $s0, $t1
+    add $s1, $t0, $s0
 
 printLoop:
     beq $s1, $s0, exitLoop
