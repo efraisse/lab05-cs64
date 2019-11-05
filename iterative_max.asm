@@ -116,6 +116,58 @@ Exit:
 
 IterativeMax:
     #TODO: write your code here, $a0 stores the address of the array, $a1 stores the length of the array
+    addi $sp, $sp, -32
+    sw $s0, 0($sp)
+    sw $s1, 4($sp)
+    sw $s2, 8($sp)
+    sw $s3, 12($sp)
+    sw $s4, 16($sp)
+    sw $s5, 20($sp)
+    sw $s6, 24($sp)
+    sw $ra, 28($sp)
+    move $s0, $a0 #s0 contains the address of the array
+    move $s1, $a1 #s1 contains the length of the array - 1
+    lw $s2, 0($s0) #s2 contains the first element in the array which is the max so far
+    j maxLoop
 
-    # Do not remove this line
-    jr      $ra
+newMax:
+    sw $s4, 0($s2)
+    li $v0, 1
+    move $a2, $s4
+    syscall
+    move $a2, $s2
+    syscall
+    jal ConventionCheck
+    addiu $s3, $s3, 1
+    addi $s0, $s0, -4
+    j maxLoop
+
+maxLoop:
+    beq $s3, $s1, exitLoop
+    lw $s4, 0($s0)
+    bgt $s4, $s2, newMax
+
+    li $v0, 1
+    move $a2, $s4
+    syscall
+    move $a2, $s2
+    syscall
+
+    jal ConventionCheck
+
+    addiu $s3, $s3, 1
+    addi $s0, $s0, -4
+    j MaxLoop
+
+exitLoop:
+    sw $s0, 0($sp)
+    sw $s1, 4($sp)
+    sw $s2, 8($sp)
+    sw $s3, 12($sp)
+    sw $s4, 16($sp)
+    sw $s5, 20($sp)
+    sw $s6, 24($sp)
+    sw $ra, 28($sp)
+    addi $sp, $sp, 32
+    li $v0, 10
+    jr $ra
